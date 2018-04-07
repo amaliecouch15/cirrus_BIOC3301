@@ -13,51 +13,21 @@ git init
 git add remote origin https://github.com/ilsenatorov/cirrus_BIOC3301.git
 git pull origin cirr_local
 ```
-This will out the scripts into the home directory on Cirrus
+This will put the scripts into the home directory on Cirrus
 
-## How to use the scripts
+## Commands available
 
-run `bash <command_name>` from the terminal in the home directory (or where the fastq files are located)
+### benchmark_script.sh
 
-### Commands available
+runs a script with diffeent number of cores. Takes the location of the script to test as first positional argument - `./benchmark_script.sh <script to benchmark>`. Make sure that <script to benchmark> is using a truncated dataset, for example __seqs_500k.fna__ instead of __seqs.fna__. 
 
-#### get_core_logs.sh
+#### get_logs.sh
 
-Extracts the real run times from all the logs in the directory, together with the number of cores, puts them all in the times.log file in the current dir
-Output looks like this:
+Collects all the logs created by __benchmark_script.sh__ and creates a logfile from them. Takes the names of logfiles without the extensions but with the dot, for example `./get_logs.sh my_benchmarking_logs.`. __Won't work without the dot at the end!__
 
-```
-Number of cores chosen is 1
-real    4m2.500s
-Number of cores chosen is 2
-real    2m17.073s                                                                                                                   
-Number of cores chosen is 4                                                                                                         
-real    1m24.652s                                                                                                                   
-Number of cores chosen is 8                                                                                                         
-real    0m57.940s                                                                                                                   
-Number of cores chosen is 16                                                                                                        
-real    0m48.751s                                                                                                                   
-Number of cores chosen is 24                                                                                                        
-real    0m48.441s                                                                                                                   
-Number of cores chosen is 32                                                                                                        
-real    0m38.918s        
-```
+## Scripts folder
 
-which can then be used to calculate [efficiency](.//benchmarks/Benchmark_efficiency.ipynb)
-
-#### run_parall_benchm.sh
-
-Runs the benchmarking script (parallel.cbs) with 1,2,4,8,16,24 and 32 cores
-
-#### parallel.cbs
-
-Measures time it took to run the qiime script pick_closed_reference_otus.py, takes the number of cores as the first positional argument.
-_Example:_ `qsub -v "cores=4" parallel.cbs` will run the code with 4 cores
-
-
-### .bashrc file
-
-The [.bashrc](.//.bashrc) file is run every time you access the terminal on Cirrus, so you can put commands you need to run on start-up there. Additionally, aliases for commands that are used often can be created there
+Has the scripts I used for working with the dataset, the ones that start with and underscore _ are unfinished. Has a useful pbs_template which has the parts of script that should be present in all PBS scripts.
 
 ## Results
 
